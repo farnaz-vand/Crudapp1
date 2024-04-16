@@ -16,19 +16,25 @@ const todosSlice = createSlice({
     addTodo: (state, action: PayloadAction<Todo>) => {
       state.todos.push(action.payload);
     },
-    updateTodo: (state, action: PayloadAction<Todo>) => {
-      const { id, title, completed } = action.payload;
-      const existingTodo = state.todos.find(todo => todo.id === id);
-      if (existingTodo) {
-        existingTodo.title = title;
-        existingTodo.completed = completed;
-      }
-    },
     removeTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter(todo => todo.id !== action.payload);
+    },
+    toggleTodo: (state, action: PayloadAction<number>) => {
+      const todo = state.todos.find(todo => todo.id === action.payload);
+      if (todo) {
+        todo.completed = !todo.completed;
+      }
+    },
+    editTodo: (state, action: PayloadAction<{ id: number; title: string }>) => {
+      const { id, title } = action.payload;
+      const todo = state.todos.find(todo => todo.id === id);
+      if (todo) {
+        todo.title = title;
+      }
     },
   },
 });
 
-export const { addTodo, updateTodo, removeTodo } = todosSlice.actions;
+export const { addTodo, removeTodo, toggleTodo, editTodo } = todosSlice.actions;
+
 export default todosSlice.reducer;
