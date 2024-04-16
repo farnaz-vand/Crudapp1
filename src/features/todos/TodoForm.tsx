@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTodo } from './TodosSlice';
-import { Todo } from '../../app/api/todos'; 
-import Input from '../../app/components/ui/Input'; 
-import Button from '../../app/components/common/Button'; 
+import { Todo } from '../../app/api/todos';
+
 
 const TodoForm: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -12,24 +11,27 @@ const TodoForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
+
     const newTodo: Todo = {
       id: Date.now(),
       title,
       completed: false,
     };
+
     dispatch(addTodo(newTodo));
     setTitle('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
-      <Input
+      <input
         type="text"
         placeholder="Enter title"
         value={title}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
+        className="border border-gray-300 rounded p-2 mr-2"
       />
-      <Button type="submit">Add Todo</Button>
+      <button type="submit">Add Todo</button>
     </form>
   );
 };
