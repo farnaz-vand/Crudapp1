@@ -1,29 +1,22 @@
-import React, { useState } from 'react';
-import Input from './Input';
+import React from 'react';
 
-const MyForm: React.FC = () => {
-  const [inputValue, setInputValue] = useState('');
+interface InputProps {
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Submitted:', inputValue);
-  };
-
+const Input: React.FC<InputProps> = ({ type, placeholder, value, onChange }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        placeholder="Enter something"
-        value={inputValue}
-        onChange={handleChange}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="border border-gray-300 rounded p-2 mr-2"
+    />
   );
 };
 
-export default MyForm;
+export default Input;
